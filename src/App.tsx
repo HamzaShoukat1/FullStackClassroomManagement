@@ -1,4 +1,4 @@
-import { GitHubBanner, Refine, WelcomePage } from "@refinedev/core";
+import { Refine, } from "@refinedev/core";
 import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 
@@ -6,17 +6,21 @@ import routerProvider, {
   DocumentTitleHandler,
   UnsavedChangesNotifier,
 } from "@refinedev/react-router";
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router";
 import "./App.css";
 import { Toaster } from "./components/refine-ui/notification/toaster";
 import { useNotificationProvider } from "./components/refine-ui/notification/use-notification-provider";
 import { ThemeProvider } from "./components/refine-ui/theme/theme-provider";
 import { dataProvider } from "./providers/data";
+import Dashbored from "./pages/Dashbored";
+import { BookAIcon, Home } from "lucide-react";
+import { Layout } from "./components/refine-ui/layout/layout";
+import SubjectsList from "./pages/Subjects/SubjectsList";
+import SubjectCreate from "./pages/Subjects/SubjectCreate";
 
 function App() {
   return (
     <BrowserRouter>
-      <GitHubBanner />
       <RefineKbarProvider>
         <ThemeProvider>
           <DevtoolsProvider>
@@ -29,10 +33,43 @@ function App() {
                 warnWhenUnsavedChanges: true,
                 projectId: "UBpqOP-4FzAwk-f4mAcu",
               }}
+              resources={[
+                {
+                  name: "dashboard",
+                  list: '/',
+                  meta: { label: "Home", icon: <Home /> }
+                },
+                {
+                  name: "subjects",
+                  list: '/subjects',
+                  create: '/subjects/create',
+                  meta: { label: "Subjects", icon: <BookAIcon /> }
+                },
+            
+              ]}
             >
               <Routes>
-                <Route index element={<WelcomePage />} />
+                
+                <Route element={
+                  <Layout>
+                    <Outlet />
+                  </Layout>
+                }>
+
+                  <Route path="/" element={<Dashbored />} />
+
+                  <Route path="subjects">
+                    <Route index element={<SubjectsList />} />
+                    <Route path="create" element={<SubjectCreate />} />
+
+                  </Route>
+
+                </Route>
+
+
               </Routes>
+
+
               <Toaster />
               <RefineKbar />
               <UnsavedChangesNotifier />
