@@ -18,7 +18,7 @@ import { Breadcrumb } from "@/components/refine-ui/layout/breadcrumb";
 import { DataTable } from "@/components/refine-ui/data-table/data-table";
 import { ShowButton } from "@/components/refine-ui/buttons/show";
 import { Subject } from "@/Types";
-import { DEPARTMENTS_OPTIONS } from "@/Constants";
+import { DEPARTMENT_OPTIONS } from "@/Constants";
 
 
 const SubjectListPage = () => {
@@ -156,7 +156,7 @@ const SubjectListPage = () => {
 
               <SelectContent>
                 <SelectItem value="all">All Departments</SelectItem>
-                {DEPARTMENTS_OPTIONS.map((department) => (
+                {DEPARTMENT_OPTIONS.map((department) => (
                   <SelectItem key={department.value} value={department.value}>
                     {department.label}
                   </SelectItem>
